@@ -50,7 +50,12 @@ namespace BTA.Online.BLL
             }
         }
 
-        public User GetUser(string iin)
+        //private object GetUser(string iIN)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public User GetUser(string iin, string psw = null)
         {
             User user = null;
             try
@@ -59,6 +64,9 @@ namespace BTA.Online.BLL
                 {
                     var users = db.GetCollection<User>("Users");
                     user = users.FindOne(f => f.IIN == iin);
+                    if (string.IsNullOrWhiteSpace(psw)) {
+                        user = users.FindOne(f => f.IIN == iin && f.Password==psw);
+                    }
                 }
             }
             catch
